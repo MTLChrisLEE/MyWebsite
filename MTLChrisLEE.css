@@ -1,0 +1,17 @@
+.thumbnail img{
+    height:200px;
+    width:100%
+}
+
+body{
+    background-color: dimgrey;
+}
+
+.jumbotron{
+    background-color: lightgrey;
+}
+
+.caption>h4{
+    text-align: center;
+    font-weight: bold;
+}
