@@ -44,7 +44,12 @@ var subjects = [
 ]
 
 
-app.get("/", function (req, res) {
+app.get("/", function(req,res){
+    res.render("welcomepage.ejs")
+})
+
+
+app.get("/home", function (req, res) {
     res.render("MTLChrisLEE.ejs", {subjects: subjects})
 })
 
