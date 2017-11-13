@@ -1,6 +1,6 @@
 #content{
     text-align: center;
-    padding:45% 0%;
+    padding:25% 0% 0% 0%;
     color: white;
 }
 
@@ -23,6 +23,7 @@ html{
 body {
     background-image: url("welcomebackgroundimage2.jpg");
     background-size: cover;
+    background-repeat: no-repeat;
 }
 
 #content>a:hover{
