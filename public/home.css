@@ -1,0 +1,82 @@
+.profileimg{
+    margin-bottom: 20px;
+    alignment: center;
+}
+
+.banner{
+    border-radius: 10%;
+    border: 1px gray solid;
+    margin-bottom: 10px;
+}
+
+
+
+.addbutton{
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.section{
+    font-family: Oswald;
+    padding-left: 15px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.thumbnail{
+    background-color: inherit;
+    margin:0;
+    border: none;
+}
+
+
+.mycirimg{
+    border-radius: 50%;
+}
+
+body{
+    background-color: #f0f0f0;
+    padding-top: 50px;
+}
+
+#author{
+    font-style: italic;
+}
+
+.cirimg{
+    border-radius: 50%;
+}
+
+.intro>a{
+    color:black;
+}
+
+.mynavbar{
+
+    background-color: #59656F;
+    border-radius: 0px;
+    border: 0px;
+    margin: 0px;
+}
+
+.mynavbar .navbar-brand, .navbar-default .navbar-nav>li>a{
+    color: #DBE2EF;
+
+}
+
+.mynavbar .navbar-brand:hover, .navbar-default .navbar-nav>li>a:hover{
+    color: #4A4C70;
+}
+
+hr {
+    height: 1px;
+    border-top: 1px solid black;
+}
+
+.intro>h1,.intro>h4{
+    font-family: 'Barlow', sans-serif;
+}
+
+#subject{
+    font-family: 'Fjalla One', sans-serif;
+}

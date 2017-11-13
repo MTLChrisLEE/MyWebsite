@@ -1,36 +1,49 @@
 #content{
     text-align: center;
-    padding: 45% 0%;
+    padding:45% 0%;
     color: white;
 }
 
-
+html{
+    height:100%
+}
 #content>h1{
     font-family: 'Lato', sans-serif;
     font-weight: bold;
-    font-size: 4em;
+    font-size: 4em
 }
 
-
-#content>h4{
+#content>h3{
     font-family: 'Merriweather Sans', sans-serif;
-    font-weight: bold;
+    font-weight: bold
+
 }
 
 
-html{
-    height: 100%
-}
-
-body{
+body {
     background-image: url("welcomebackgroundimage2.jpg");
     background-size: cover;
 }
 
-hr{
-    width:500px
+#content>a:hover{
+    background-color: dimgrey;
+    color: white;
+    font-weight: bold;
 }
 
-.btn-xlg{
-    font-size: 21px;
+.btn{
+    border-radius: 10%;
+}
+
+hr{
+    width: 550px
+}
+
+.btn-xlg {
+    padding: 18px 28px;
+    font-size: 18px;
+    line-height: normal;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
 }

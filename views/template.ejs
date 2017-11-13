@@ -1,11 +1,11 @@
 <% include partials/header.ejs%>
-
-<div class="jumbotron">
+<div class="container">
+<div class="intro">
     <h1 id="subject"><%= subjects.name.toUpperCase()%></h1>
-    <p id="quote"><%= subjects.quote%></p>
-    <p id="author"><%=subjects.author%></p>
+    <h3 id="quote"><%= subjects.quote%></h3>
+    <p id="author" style="display: inline-block"><%=subjects.author%></p>
+    <button class="addbutton btn btn-default btn-primary">Add a course</button>
+    <hr size="20">
+    <br>
 </div>
-
-</div>
-</body>
-</html>
+<% include partials/footer.ejs%>

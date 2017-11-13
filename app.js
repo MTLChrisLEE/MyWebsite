@@ -11,46 +11,45 @@ app.use(express.static("public"));
 var subjects = [
     {
         name: "web",
-        image: "web.jpg",
+        image: "web2.jpg",
         quote: "\"Websites promote you 24/7: No employee will do that.\"",
         author: "- Paul Cookson"
 
     },
     {
         name: "python",
-        image: "python.jpg",
-        quote: "\"Python has been an important part of Google since the beginning, and remains so as the system grows and evolves.\"",
+        image: "python2.jpg",
+        quote: "\"Python has been an important part of Google since the beginning.\"",
         author: "-Peter Norvig"
 
     },
     {
         name: "java",
-        image: "java.jpg",
+        image: "java2.jpg",
         quote: "\"Java is C++ without the guns, knives, and clubs.\"",
         author: "-James Gosling"
     },
     {
         name: "data science",
-        image: "datascience.jpg",
+        image: "datascience2.jpg",
         quote: "\"Data is the new science. Big data holds the answers.\"",
         author: "- Pat Gelsinger"
     },
     {
         name: "operating system",
-        image: "OS.jpg",
+        image: "OS2.jpg",
         quote: "\"UNIX is basically a simple operating system, but you have to be a genius to understand the simplicity.\"",
         author: "- Dennis Ritchie"
     }
 ]
 
 
-app.get("/", function(req,res){
+app.get("/",function(req,res){
     res.render("welcomepage.ejs")
 })
 
-
 app.get("/home", function (req, res) {
-    res.render("MTLChrisLEE.ejs", {subjects: subjects})
+    res.render("home.ejs", {subjects: subjects})
 })
 
 app.get("/aboutme", function (req, res) {
@@ -67,6 +66,8 @@ app.get("/:subject", function (req, res) {
     })
     if (subject) {
         res.render("template.ejs", {subjects: subject})
+    }else{
+        res.render("wrongpage.ejs")
     }
 
 })
