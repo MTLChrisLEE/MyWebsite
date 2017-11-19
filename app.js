@@ -44,6 +44,18 @@ var subjects = [
 ]
 
 
+var courses = [
+    {
+        title:"Hello",
+        date: "2017/11/13"
+    },
+    {
+        title:"World",
+        date: "2017/11/13"
+    }
+]
+
+
 app.get("/",function(req,res){
     res.render("welcomepage.ejs")
 })
@@ -64,13 +76,16 @@ app.get("/:subject", function (req, res) {
             return element;
         }
     })
-    if (subject) {
-        res.render("template.ejs", {subjects: subject})
-    }else{
-        res.render("wrongpage.ejs")
-    }
 
+    if (subject) {
+        res.render("template.ejs", {subjects: subject, courses:courses})
+    }else{
+        res.render("wrongpage.ejs");
+    }
 })
+
+
+
 
 
 app.listen(30000, process.env.IP, function () {

@@ -9,8 +9,6 @@
     margin-bottom: 10px;
 }
 
-
-
 .addbutton{
     margin-bottom: 10px;
     margin-left: 10px;
@@ -29,13 +27,12 @@
     border: none;
 }
 
-
 .mycirimg{
     border-radius: 50%;
 }
 
 body{
-    background-color: #f0f0f0;
+    background-color: white;
     padding-top: 50px;
 }
 
@@ -52,7 +49,6 @@ body{
 }
 
 .mynavbar{
-
     background-color: #59656F;
     border-radius: 0px;
     border: 0px;
@@ -79,4 +75,12 @@ hr {
 
 #subject{
     font-family: 'Fjalla One', sans-serif;
+}
+
+#date{
+    border-right: 1px black solid;
+}
+
+#title{
+    margin-top: 0px;
 }

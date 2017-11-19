@@ -1,11 +1,29 @@
-<% include partials/header.ejs%>
+<% include partials/header.ejs %>
 <div class="container">
-<div class="intro">
-    <h1 id="subject"><%= subjects.name.toUpperCase()%></h1>
-    <h3 id="quote"><%= subjects.quote%></h3>
-    <p id="author" style="display: inline-block"><%=subjects.author%></p>
-    <button class="addbutton btn btn-default btn-primary">Add a course</button>
-    <hr size="20">
-    <br>
+    <div class="intro">
+        <h1 id="subject"><%= subjects.name.toUpperCase() %></h1>
+        <h3 id="quote"><%= subjects.quote %></h3>
+        <p id="author" style="display: inline-block"><%= subjects.author %></p>
+        <button class="addbutton btn btn-default btn-primary">Add a course</button>
+        <hr size="20">
+        <br>
+    </div>
+
+    <% courses.forEach(function(course){ %>
+    <div class="row">
+        <div class="col-lg-2">
+            <p id="date" ><%= course.date %></p>
+        </div>
+        <div class="intro col-lg-10">
+            <a href="/">
+                <h2 id="title"><%= course.title %></h2>
+            </a>
+        </div>
+    </div>
+    <hr size="20" style="border-top:1px dotted black" >
+    <% }) %>
 </div>
-<% include partials/footer.ejs%>
+
+
+</div>
+<% include partials/footer.ejs %>

@@ -4,7 +4,7 @@
 }
 
 body{
-    background-color: dimgrey;
+    background-color: white;
 }
 
 .jumbotron{
@@ -24,3 +24,4 @@ body{
     font-size: 18px;
     font-style: italic;
 }
+
