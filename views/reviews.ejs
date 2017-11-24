@@ -1,0 +1,24 @@
+<% include partials/header.ejs %>
+<div class="container">
+    <div class="intro">
+        <h1 id="subject">REVIEW</h1>
+        <h3 id="quote">Reviewing interesting papers</h3>
+        <a role="button" class="addbutton btn btn-default btn-primary" href="/reviews/new">Add a review</a>
+        <hr size="20" style="margin-bottom: 0px">
+        <br>
+    </div>
+
+    <% reviews.forEach(function(review){ %>
+    <div class="row">
+        <div class="intro col-lg-10">
+            <a href="/">
+                <h2 id="coursetitle"><%= review.title %></h2>
+            </a>
+            <h4 style="margin: 0px 0px 0px 10px;"><%= review.author %> - <%= review.paper %></h4>
+        </div>
+    </div>
+    <hr size="20" style="border-top:1px dotted black; margin-top: 10px">
+    <% }) %>
+</div>
+
+<% include partials/footer.ejs %>

@@ -1,0 +1,32 @@
+<% include partials/header.ejs %>
+
+<div class="container">
+    <div id="inputform">
+        <form action="/home" method="POST">
+            <div class="form-group">
+                <label for="newsubject">Subject:</label>
+                <input type="text" id="newsubject" name="subjects[name]" placeholder="Subject" style="width:600px">
+            </div>
+
+            <div class="form-group">
+                <label for="image">Image:</label>
+                <input type="text" id="image" name="subjects[image]" placeholder="Image URL" style="width:600px; margin-left: 10px">
+            </div>
+
+            <div class="form-group">
+                <label for="quote">Quote: </label>
+                <input type="text" id="quote" name="subjects[quote]" placeholder="Quote" style="width:600px; margin-left: 10px">
+            </div>
+
+            <div class="form-group">
+                <label for="newauthor">Author: </label>
+                <input type="text" id="newauthor" name="subjects[author]" placeholder="Author" style="width:600px; margin-left: 5px">
+            </div>
+
+            <div class="form-group">
+                <input class="btn btn-primary btn-md" type="submit">
+            </div>
+        </form>
+    </div>
+</div>
+<% include partials/footer.ejs %>

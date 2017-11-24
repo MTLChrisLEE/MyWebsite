@@ -1,0 +1,47 @@
+<% include partials/header.ejs%>
+<div class="container">
+    <div id="inputform">
+        <form action="/reviews" method="POST">
+            <div class="form-group">
+                <label for="title" style="  margin-left: 40px">Title:</label>
+                <input type="text" id="title" name="reviews[title]" placeholder="Title" style="width:600px">
+            </div>
+
+            <div class="form-group">
+                <label for="title" style="margin-left: 22px">Author:</label>
+                <input type="text" id="title" name="reviews[author]" placeholder="Author" style="width:600px">
+            </div>
+
+            <div class="form-group">
+                <label for="title">Paper title:</label>
+                <input type="text" id="title" name="reviews[paper]" placeholder="Paper Title" style="width:600px">
+            </div>
+
+            <div class="form-group">
+                <div id="wmd-button-bar"></div>
+                <textarea id="wmd-input" name="reviews[content]" class="wmd-input"></textarea>
+            </div>
+
+            <div class="form-group">
+                <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+            </div>
+
+
+            <input class="btn btn-primary btn-md" type="submit">
+
+        </form>
+    </div>
+</div>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Converter.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Editor.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Sanitizer.js"></script>
+
+<script>
+    var converter = Markdown.getSanitizingConverter();
+    var editor = new Markdown.Editor(converter);
+    editor.run();
+</script>
+
+
+<% include partials/footer.ejs%>
