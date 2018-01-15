@@ -1,7 +1,28 @@
-.profileimg{
-    margin-bottom: 20px;
-    alignment: center;
+/*=================================*/
+/*           NAVBAR CSS         */
+/*=================================*/
+
+.mynavbar{
+    background-color: #59656F;
+    border-radius: 0px;
+    border: 0px;
+    margin: 0px;
 }
+
+.mynavbar .navbar-brand, .navbar-default .navbar-nav>li>a{
+    color: #DBE2EF;
+
+}
+
+.mynavbar .navbar-brand:hover, .navbar-default .navbar-nav>li>a:hover{
+    color: #4A4C70;
+}
+
+
+
+/*=================================*/
+/*           MAIN PAGE CSS         */
+/*=================================*/
 
 .banner{
     border-radius: 10%;
@@ -40,6 +61,12 @@ body{
     padding-top: 50px;
 }
 
+
+
+/*=================================*/
+/*           MAIN PAGE CSS         */
+/*=================================*/
+
 #author{
     font-style: italic;
 }
@@ -50,22 +77,6 @@ body{
 
 .intro>a{
     color:black;
-}
-
-.mynavbar{
-    background-color: #59656F;
-    border-radius: 0px;
-    border: 0px;
-    margin: 0px;
-}
-
-.mynavbar .navbar-brand, .navbar-default .navbar-nav>li>a{
-    color: #DBE2EF;
-
-}
-
-.mynavbar .navbar-brand:hover, .navbar-default .navbar-nav>li>a:hover{
-    color: #4A4C70;
 }
 
 hr {
@@ -93,6 +104,12 @@ hr {
     margin: 0px 0px 0px 10px;
 }
 
+
+
+
+/*=================================*/
+/*           NEW ROUTE CSS         */
+/*=================================*/
 .wmd-button > span {
     background-image:  url('//cdn.rawgit.com/derobins/wmd/master/images/wmd-buttons.png');
     background-repeat: no-repeat;
@@ -124,3 +141,4 @@ hr {
 .wmd-input{
     background-color: white;
 }
+

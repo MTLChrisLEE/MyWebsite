@@ -1,20 +1,20 @@
-<% include partials/header.ejs%>
+<% include partials/header.ejs %>
+
 <div class="container">
-    <h1><%=course.title%></h1>
+    <h1> <%= course.title%></h1>
     <a role="button" class="addbutton btn btn-default btn-info" href="<%=course._id%>/edit" style="margin-left: 0px;">Edit</a>
     <form action="/<%=subject.name%>/<%=course._id%>?_method=DELETE" method="POST">
         <button class="addbutton btn btn-default btn-danger" style="margin-left: 0px">Delete</button>
     </form>
-
     <hr>
+
     <div class="form-group">
-        <div id="wmd-preview" class="wmd-panel wmd-preview"><%-course.content%></div>
+        <div class="form-group">
+            <div id="wmd-preview"><%-course.content %></div>
+        </div>
     </div>
 
-
-
 </div>
-
 
 <script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Converter.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Editor.js"></script>

@@ -1,25 +1,26 @@
-<% include partials/header.ejs%>
+<% include partials/header.ejs %>
+
 <div class="container">
     <div id="inputform">
         <form action="/reviews/<%=review._id%>?_method=PUT" method="POST">
             <div class="form-group">
                 <label for="title" style="  margin-left: 40px">Title:</label>
-                <input type="text" id="title" name="reviews[title]" value="<%=review.title%>" style="width:600px">
+                <input type="text" id="title" name="reviews[title]" value="<%= review.title%>" style="width:600px">
             </div>
 
             <div class="form-group">
                 <label for="title" style="margin-left: 22px">Author:</label>
-                <input type="text" id="title" name="reviews[author]" value="<%=review.author%>" style="width:600px">
+                <input type="text" id="title" name="reviews[author]" value="<%= review.author%>" style="width:600px">
             </div>
 
             <div class="form-group">
                 <label for="title">Paper title:</label>
-                <input type="text" id="title" name="reviews[paper]" value="<%=review.paper%>" style="width:600px">
+                <input type="text" id="title" name="reviews[paper]" value="<%= review.paper%>" style="width:600px">
             </div>
 
             <div class="form-group">
                 <div id="wmd-button-bar"></div>
-                <textarea id="wmd-input" name="reviews[content]" class="wmd-input"><%=review.content%>" </textarea>
+                <textarea id="wmd-input" name="reviews[content]" class="wmd-input"><%=review.content %></textarea>
             </div>
 
             <div class="form-group">
@@ -43,5 +44,6 @@
     editor.run();
 </script>
 
-
 <% include partials/footer.ejs%>
+
+

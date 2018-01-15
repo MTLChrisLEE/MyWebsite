@@ -1,12 +1,13 @@
 /**
- * Created by Chris on 1/12/2018.
+ * Created by Chris on 1/7/2018.
  */
-var mongoose =  require("mongoose")
+var mongoose = require("mongoose");
 
 var Subject = require("./models/subject")
 var Review = require("./models/review")
 var Course = require("./models/course")
 var Comment = require("./models/comment")
+
 
 var subjects = [
     {
@@ -45,60 +46,47 @@ var subjects = [
 
 
 
+
 var reviews = [
     {
-        title:"Review1",
-        author: "Whatever1",
-        paper: "Title of the paper",
-        content: ""
+        title: "This is a review1",
+        author: "Author1",
+        paper: "PaperTitle1",
+        content: "LALABLABLA"
     },
     {
-        title:"Review2",
-        author: "Whatever2",
-        paper: "Title of the paper2",
-        content: ""
-    },
-    {
-        title:"Review3",
-        author: "Whatever3",
-        paper: "Title of the paper3",
-        content: ""
-    },
-    {
-        title:"Review4",
-        author: "Whatever4",
-        paper: "Title of the paper4",
-        content: ""
+        title: "This is a review2",
+        author: "Author2",
+        paper: "PaperTitle2",
+        content: "YOOOOOOOO!!!!!"
     }
 ]
 
 
 function seedDB() {
-
-
-    Course.remove({}, function (err) {
-        if (err) {
-            console.log(err)
+    //Remove all Subjects
+    Course.remove({},function(err){
+        if(err){
+            console.log(err);
         }
-        console.log("All courses are removed")
+        console.log("Removed all courses")
     });
 
-
-
-    Review.remove({}, function (err) {
+    Review.remove({},function(err){
         if (err) {
             console.log(err)
         }
-    })
-    console.log("All reviews are removed")
+        console.log("Removed all reviews")
 
-    reviews.forEach(function(review){
-        Review.create(review, function(err,subject){
-            if(err){
-                console.log(err)
-            }else{
-                console.log("A review is added")
-            }
+        //Adds subject
+        reviews.forEach(function (subject) {
+            Review.create(subject, function (err, subject) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Added a subject");
+                }
+            })
         })
     })
 
@@ -107,19 +95,24 @@ function seedDB() {
         if (err) {
             console.log(err)
         }
-    })
-    console.log("All reviews are removed")
+        console.log("Removed all subjects")
 
-    subjects.forEach(function(subject){
-        Subject.create(subject, function(err,subject){
-            if(err){
-                console.log(err)
-            }else{
-                console.log("A subject is added")
-            }
+        //Adds subject
+        subjects.forEach(function (subject) {
+            Subject.create(subject, function (err, subject) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("Added a subject");
+                }
+            })
         })
-    })
-
-}
+    }
+)}
 
 module.exports = seedDB;
+
+
+
+
+
