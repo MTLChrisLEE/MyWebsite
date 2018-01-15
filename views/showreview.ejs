@@ -1,0 +1,31 @@
+<% include partials/header.ejs%>
+<div class="container">
+    <h1><%=review.title%></h1>
+    <h4><%=review.author%> - <%=review.paper%></h4>
+    <a role="button" class="addbutton btn btn-default btn-info" href="<%=review._id%>/edit" style="margin-left: 0px;">Edit</a>
+    <form action="/reviews/<%=review._id%>?_method=DELETE" method="POST">
+        <button class="addbutton btn btn-default btn-danger" style="margin-left: 0px">Delete</button>
+    </form>
+
+    <hr>
+    <div class="form-group">
+        <div id="wmd-preview" class="wmd-panel wmd-preview"><%-review.content%></div>
+    </div>
+
+
+
+</div>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Converter.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Editor.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Sanitizer.js"></script>
+
+<script>
+    var converter = Markdown.getSanitizingConverter();
+    var editor = new Markdown.Editor(converter);
+    editor.run();
+</script>
+
+
+<% include partials/footer.ejs%>

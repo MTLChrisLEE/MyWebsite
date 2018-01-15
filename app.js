@@ -4,108 +4,68 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var mongoose = require("mongoose");
+var markdown = require("markdown").markdown;
+
+var Subject = require("./models/subject")
+var Review = require("./models/review")
+var Course = require("./models/course")
+var Comment = require("./models/comment")
+var seedDB = require("./seeds")
+var methodOverride = require("method-override");
+
+
+seedDB();
+
 
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({ extended: true }));
-
-var subjects = [
-    {
-        name: "web",
-        image: "https://i.imgur.com/nosrsBg.jpg",  //https://imgur.com/nosrsBg
-        quote: "\"Websites promote you 24/7: No employee will do that.\"",
-        author: "- Paul Cookson"
-
-    },
-    {
-        name: "python",
-        image: "https://i.imgur.com/mvNWVNW.jpg",  //https://imgur.com/a/Q1k33
-        quote: "\"Python has been an important part of Google since the beginning.\"",
-        author: "-Peter Norvig"
-
-    },
-    {
-        name: "java",
-        image: "https://i.imgur.com/QZP7KY8.jpg",  //https://imgur.com/a/rMtbT
-        quote: "\"Java is C++ without the guns, knives, and clubs.\"",
-        author: "-James Gosling"
-    },
-    {
-        name: "data science",
-        image: "https://i.imgur.com/zzrKnK7.jpg",  //https://imgur.com/a/Goeej
-        quote: "\"Data is the new science. Big data holds the answers.\"",
-        author: "- Pat Gelsinger"
-    },
-    {
-        name: "operating system",
-        image: "https://i.imgur.com/mAkbjU5.jpg",     //https://imgur.com/a/ygIVm
-        quote: "\"UNIX is basically a simple operating system, but you have to be a genius to understand the simplicity.\"",
-        author: "- Dennis Ritchie"
-    }
-]
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride("_method"))
+mongoose.connect("mongodb://localhost/MTLChrisLEE");
 
 
-var courses = [
-    {
-        title:"Hello",
-        content: ""
-    },
-    {
-        title:"World",
-        content: ""
-    }
-]
+//=========================================//
+//=========================================//
+//                  ROUTES                 //
+//=========================================//
+//=========================================//
 
 
-var reviews = [
-    {
-        title:"Review1",
-        author: "Whatever1",
-        paper: "Title of the paper",
-        content: ""
-    },
-    {
-        title:"Review2",
-        author: "Whatever2",
-        paper: "Title of the paper2",
-        content: ""
-    },
-    {
-        title:"Review3",
-        author: "Whatever3",
-        paper: "Title of the paper3",
-        content: ""
-    },
-    {
-        title:"Review4",
-        author: "Whatever4",
-        paper: "Title of the paper4",
-        content: ""
-    }
-]
-
-
-app.get("/",function(req,res){
-    res.render("welcomepage.ejs")
-})
-
-
-//HOME
-app.get("/home", function (req, res) {
-    res.render("home.ejs", {subjects: subjects, reviews:reviews})
+//=========================================//
+//                  Subjects               //
+//=========================================//
+app.get("/", function (req, res) {
+    Subject.find({}, function (err, subjects) {
+        if (err) {
+            console.log(err)
+        } else {
+            Review.find({}, function (err, reviews) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    res.render("home.ejs", {subjects: subjects, reviews: reviews})
+                }
+            })
+        }
+    })
 })
 
 
 //NEW ROUTE FOR SUBJECTS
-app.get("/home/new",function(req,res){
+app.get("/home/new", function (req, res) {
     res.render("newsubject.ejs");
 })
 
 
 //POST ROUTE FOR SUBJECTS
-app.post("/home",function(req,res){
-    var subject = req.body.subjects;
-    subjects.push(subject);
-    res.redirect("/home");
+app.post("/", function (req, res) {
+    Subject.create(req.body.subjects, function (err, newSubject) {
+        if (err) {
+            console.log(err)
+        } else {
+            res.redirect("/")
+        }
+    })
 })
 
 app.get("/aboutme", function (req, res) {
@@ -113,81 +73,216 @@ app.get("/aboutme", function (req, res) {
 })
 
 
+//=========================================//
+//                  Reviews                //
+//=========================================//
+
 
 //INDEX ROUTE FOR REVIEWS
-app.get("/reviews",function(req,res){
-    res.render("reviews.ejs",{reviews:reviews})
+app.get("/reviews", function (req, res) {
+    Review.find({}, function (err, reviews) {
+        if (err) {
+            console.log(err)
+        } else {
+            res.render("reviews.ejs", {reviews: reviews})
+        }
+    })
 })
 
 
 //NEW ROUTE FOR REVIEWS
-app.get("/reviews/new",function(req,res){
+app.get("/reviews/new", function (req, res) {
     res.render("newreview.ejs")
 })
 
 
-app.post("/reviews",function(req,res){
-    var review = req.body.reviews;
-    reviews.push(review);
-    res.redirect("/reviews");
+//POST ROUTE FOR REVIEWS
+app.post("/reviews", function (req, res) {
+    Review.create(req.body.reviews, function (err, newReview) {
+        if (err) {
+            res.render("newreview.ejs");
+        } else {
+            res.redirect("/reviews");
+        }
+    })
 })
 
 
+//SHOW ROUTE FOR REVIEWS
+app.get("/reviews/:id", function (req, res) {
+    Review.findById(req.params.id, function (err, foundReview) {
+        if (err) {
+            console.log(err)
+        } else {
 
+            foundReview.content = markdown.toHTML(foundReview.content)
+            res.render("showreview.ejs", {review: foundReview})
+        }
+    })
+})
+
+
+//EDIT ROUTE FOR A REVIEW
+app.get("/reviews/:id/edit", function (req, res) {
+    Review.findById(req.params.id, req.body.review, function (err, foundReview) {
+        if (err) {
+            res.redirect("/reviews")
+        } else {
+            res.render("editreview.ejs", {review: foundReview});
+        }
+    })
+})
+
+
+//UPDATE ROUTE FOR A REVIEW
+app.put("/reviews/:id", function (req, res) {
+    Review.findByIdAndUpdate(req.params.id, req.body.reviews, function (err, updatedReview) {
+        if (err) {
+            res.redirect("/reviews")
+        } else {
+            res.redirect("/reviews/" + req.params.id)
+        }
+    })
+})
+
+
+app.delete("/reviews/:id", function (req, res) {
+    Review.findByIdAndRemove(req.params.id, function (err) {
+        if (err) {
+            console.log(err)
+        } else {
+            res.redirect("/reviews")
+        }
+    })
+})
+
+
+//=========================================//
+//                  Courses                //
+//=========================================//
 
 
 //INDEX ROUTE FOR COURSES
 app.get("/:subject", function (req, res) {
-    var subjectreq = req.params.subject;
-    var subject = subjects.find(function (element) {
-        if (element.name == subjectreq) {
-            return element;
+    Subject.find({name: req.params.subject}).populate("courses").exec(function (err, foundSubject) {
+        if (err) {
+            res.redirect("/")
+        } else {
+            res.render("template.ejs", {subjects: foundSubject[0], courses: foundSubject[0].courses})
         }
     })
-
-    if (subject) {
-        res.render("template.ejs", {subjects: subject, courses:courses})
-    }else{
-        res.render("wrongpage.ejs");
-    }
 })
-
 
 
 //NEW ROUTE FOR COURSE
-app.get("/:subject/new",function(req,res){
-    var subjectreq = req.params.subject;
-    var subject = subjects.find(function (element) {
-        if (element.name == subjectreq) {
-            return element;
+app.get("/:subject/course/new", function (req, res) {
+    Subject.find({name: req.params.subject}, function (err, foundSubject) {
+        if (err) {
+            res.redirect("/")
+        } else {
+            res.render("newcourse.ejs", {subject: foundSubject[0]})
         }
     })
-
-    if (subject) {
-        res.render("newcourse.ejs", {subject: subject});
-    }
 })
 
 
-
-
 //POST ROUTE FOR COURSES
-app.post("/:subject",function(req,res){
-    var post = req.body.courses;
-    courses.push(post);
-
-    var subjectreq = req.params.subject;
-    var subject = subjects.find(function (element) {
-        if (element.name == subjectreq) {
-            return element;
+app.post("/:subject/courses", function (req, res) {
+    Subject.find({name: req.params.subject}).populate("courses").exec(function (err, theSubject) {
+        if (err) {
+            console.log(err);
+        } else {
+            Course.create(req.body.courses, function (err, createdCourse) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    theSubject[0].courses.push(createdCourse);
+                    theSubject[0].save();
+                    res.redirect("/" + theSubject[0].name)
+                }
+            })
         }
     })
+})
 
-    if (subject) {
-        res.render("template.ejs", {subjects: subject, courses:courses})
-    }else{
-        res.render("wrongpage.ejs");
-    }
+
+//SHOW ROUTE FOR A COURSE
+app.get("/:subject/:id", function (req, res) {
+    Subject.find({name: req.params.subject}, function (err, foundSubject) {
+        if (err) {
+            console.log(err)
+        } else {
+            Course.findById(req.params.id, function (err, foundCourse) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    foundCourse.content = markdown.toHTML(foundCourse.content)
+                    res.render("showcourse.ejs", {subject: foundSubject[0], course: foundCourse});
+                }
+            })
+        }
+    })
+})
+
+
+//EDIT ROUTE
+app.get("/:subject/:id/edit", function (req, res) {
+    Subject.find({name: req.params.subject}, function (err, foundSubject) {
+        if (err) {
+            console.log(err)
+        } else {
+            Course.findById(req.params.id, function (err, foundCourse) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    res.render("editcourse.ejs", {subject: foundSubject[0], course: foundCourse})
+                }
+            })
+        }
+    })
+})
+
+
+//UPDATE ROUTE
+app.put("/:subject/:id", function (req, res) {
+    Subject.find({name: req.params.subject}, function (err, foundSubject) {
+        if (err) {
+            console.log(err)
+        } else {
+            Course.findByIdAndUpdate(req.params.id, req.body.course, function (err, updatedCourse) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    res.redirect("/" + foundSubject[0].name + "/" + req.params.id)
+                }
+            })
+        }
+    })
+})
+
+
+//DELETE ROUTE
+app.delete("/:subject/:id", function (req, res) {
+    //1. Find a course according to its id from the collection & Removes it
+    Course.findByIdAndRemove(req.params.id, function (err, deletedCourse) {
+        if (err) {
+            console.log(err)
+        } else {
+            //2. Update "a" subject
+            Subject.updateOne({name: req.params.subject},
+                {
+                    $pull: {courses: {_id: req.params.id}} //Pulling the deleted course from courses[]
+                },
+                function (err) {
+                    if(err){
+                        console.log(err)
+                    }else{
+                        res.redirect("/"+req.params.subject)   //3. Redirecting
+                    }
+                }
+            )
+        }
+    })
 })
 
 

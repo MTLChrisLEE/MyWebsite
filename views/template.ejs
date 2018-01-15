@@ -4,7 +4,7 @@
         <h1 id="subject"><%= subjects.name.toUpperCase() %></h1>
         <h3 id="quote"><%= subjects.quote %></h3>
         <p id="author" style="display: inline-block"><%= subjects.author %></p>
-        <a role="button" class="addbutton btn btn-default btn-primary" href="<%=subjects.name%>/new">Add a course</a>
+        <a role="button" class="addbutton btn btn-default btn-primary" href="<%=subjects.name%>/course/new">Add a course</a>
         <hr size="20" style="margin-bottom: 0px">
         <br>
     </div>
@@ -12,7 +12,7 @@
     <% courses.forEach(function(course){ %>
     <div class="row">
         <div class="intro col-lg-10">
-            <a href="/">
+            <a href="/<%=subjects.name%>/<%=course._id%>">
                 <h2 id="coursetitle"><%= course.title %></h2>
             </a>
         </div>

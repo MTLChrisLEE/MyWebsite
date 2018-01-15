@@ -1,7 +1,7 @@
 <% include partials/header.ejs%>
 <div class="container">
     <div id="inputform">
-        <form action="/<%=subject.name%>" method="POST">
+        <form action="/<%=subject.name%>/courses" method="POST">
             <div class="form-group">
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="courses[title]" placeholder="Title" style="width:600px">
