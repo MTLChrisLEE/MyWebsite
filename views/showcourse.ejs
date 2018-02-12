@@ -1,18 +1,43 @@
 <% include partials/header.ejs %>
 
 <div class="container">
-    <h1> <%= course.title%></h1>
-    <a role="button" class="addbutton btn btn-default btn-info" href="<%=course._id%>/edit" style="margin-left: 0px;">Edit</a>
-    <form action="/<%=subject.name%>/<%=course._id%>?_method=DELETE" method="POST">
+    <h1> <%= course.title %></h1>
+    <%if(currentUser && currentUser.isAdmin){ %>
+    <a role="button" class="addbutton btn btn-default btn-info" href="<%= course._id %>/edit" style="margin-left: 0px;">Edit</a>
+    <form action="/<%= subject.name %>/<%= course._id %>?_method=DELETE" method="POST">
         <button class="addbutton btn btn-default btn-danger" style="margin-left: 0px">Delete</button>
     </form>
+    <%} %>
     <hr>
 
-    <div class="form-group">
-        <div class="form-group">
-            <div id="wmd-preview"><%-course.content %></div>
-        </div>
+    <div><%- course.content %></div>
+
+    <br>
+    <br>
+
+
+    <p><strong>Comments</strong></p>
+    <hr style="margin-top: 0px">
+
+    <% comments.forEach(function(comment){ %>
+    <div>
+        <p style="color: cornflowerblue"><strong><em><%= currentUser.username%></em></strong></p>
+        <div><%- comment.content %></div>
     </div>
+    <hr size="20" style="border-top:1px dotted black">
+    <% }) %>
+
+
+
+    <form action="/<%= subject.name %>/<%= course._id %>/comment" method="POST">
+        <div class="form-group">
+            <%= currentUser.username%>
+            <div id="wmd-button-bar"></div>
+            <textarea id="wmd-input" name="comment[content]" class="wmd-input"
+                      style="resize: none; width:1140px; height:150px"></textarea>
+        </div>
+        <input class="btn btn-primary btn-md" value="Comment" type="submit">
+    </form>
 
 </div>
 
@@ -27,4 +52,4 @@
 </script>
 
 
-<% include partials/footer.ejs%>
+<% include partials/footer.ejs %>

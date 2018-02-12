@@ -3,10 +3,12 @@
 <div class="container">
     <h1> <%= review.title%></h1>
     <h3> <%= review.author %> - <%= review.paper %></h3>
+    <%if(currentUser && currentUser.isAdmin){ %>
     <a role="button" class="addbutton btn btn-default btn-info" href="<%=review._id%>/edit" style="margin-left: 0px;">Edit</a>
     <form action="/reviews/<%=review._id%>?_method=DELETE" method="POST">
         <button class="addbutton btn btn-default btn-danger" style="margin-left: 0px">Delete</button>
     </form>
+    <%} %>
     <hr>
 
     <div class="form-group">

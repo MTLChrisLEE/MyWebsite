@@ -5,45 +5,48 @@
     <div class="row">
         <div class="courses col-lg-6 col-md-12">
             <h3 class="section">Courses</h3>
+            <% if(currentUser && currentUser.isAdmin){%>
             <a role="button" class="addbutton btn btn-default btn-primary" href="/home/new">Add a subject</a>
+            <% } %>
             <hr style="margin-top: 0px">
 
             <% subjects.forEach(function(subject){ %>
-                <div class="col-lg-4">
-                    <a href="/<%= subject.name %>">
-                        <div class="thumbnail">
-                            <img class="mycirimg" src="<%= subject.image %>">
-                        </div>
-                    </a>
-                </div>
-                <div class="intro col-lg-8">
-                    <a href="/<%= subject.name %>">
-                        <h4 id="subject"><%= subject.name.toUpperCase() %></h4>
-                        <p id="quote"><%= subject.quote %></p>
-                        <p id="author"><%= subject.author %></p>
-                    </a>
-                </div>
-                <hr class="col-lg-11" style="border-top:1px dotted black; align:center;">
+            <div class="col-lg-4">
+                <a href="/<%= subject.name %>">
+                    <div class="thumbnail">
+                        <img class="mycirimg" src="<%= subject.image %>">
+                    </div>
+                </a>
+            </div>
+            <div class="intro col-lg-8">
+                <a href="/<%= subject.name %>">
+                    <h4 id="subject"><%= subject.name.toUpperCase() %></h4>
+                    <p id="quote"><%= subject.quote %></p>
+                    <p id="author"><%= subject.author %></p>
+                </a>
+            </div>
+            <hr class="col-lg-11" style="border-top:1px dotted black; align:center;">
             <% }) %>
 
-                <div class="col-lg-4">
-                    <div class="thumbnail">
-                        <img class="cirimg" src="comingsoon.jpg">
-                    </div>
+            <div class="col-lg-4">
+                <div class="thumbnail">
+                    <img class="cirimg" src="comingsoon.jpg">
                 </div>
-                <div class="col-lg-8">
-                    <div>
-                        <h4 id="subject">COMING SOON</h4>
-                    </div>
+            </div>
+            <div class="col-lg-8">
+                <div>
+                    <h4 id="subject">COMING SOON</h4>
                 </div>
+            </div>
         </div>
 
 
         <div class="reviews col-lg-4 col-md-6">
             <h3 class="section"><a style="color:black" href="/reviews">Reviews</a></h3>
+            <% if(currentUser && currentUser.isAdmin){%>
             <a role="button" class="addbutton btn btn-default btn-primary" href="/reviews/new">Add a review</a>
+            <% } %>
 
-            <h5 class="section"><a style="color:black; margin-left: 80px;" href="/reviews">Read more</a></h5>
             <hr style="margin-top: 0px">
 
             <% reviews.forEach(function(review){ %>
@@ -63,7 +66,7 @@
 
         <div class="Links col-lg-2 col-md-12">
 
-            <h3 class="section" style="padding-bottom:6px;">Links</h3>
+            <h3 class="section">Links</h3>
             <hr style="margin-top: 0px">
 
             <a href="https://www.youtube.com/channel/UC45PmK55T7J_G6-ejkFO4hw">

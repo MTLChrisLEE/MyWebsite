@@ -23,10 +23,14 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/aboutme">About Me</a></li>
+                <li><a href="https://www.linkedin.com/in/sanghyukchrislee/">About Me</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/">Log In<i class="fa fa-user-plus"></i></a></li>
+                <%if(!currentUser){%>{>
+                <li><a href="/signin">Log In<i class="fa fa-user-plus"></i></a></li>
+                <%}else{%>
+                <li><a href="/signout">Log Out<i class="fa fa-user-plus"></i></a></li>
+                <%}%>
                 <li><a href="/">Contact <i class="fa fa-user"></i></a></li>
             </ul>
         </div>
