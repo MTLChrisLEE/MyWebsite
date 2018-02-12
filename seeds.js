@@ -45,8 +45,6 @@ var subjects = [
 ]
 
 
-
-
 var reviews = [
     {
         title: "This is a review1",
@@ -63,6 +61,9 @@ var reviews = [
 ]
 
 
+
+
+
 function seedDB() {
     //Remove all Subjects
     Course.remove({},function(err){
@@ -70,6 +71,8 @@ function seedDB() {
             console.log(err);
         }
         console.log("Removed all courses")
+
+
     });
 
     Review.remove({},function(err){

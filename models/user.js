@@ -1,5 +1,5 @@
 /**
- * Created by Chris on 2/10/2018.
+ * Created by Chris on 1/16/2018.
  */
 var mongoose = require("mongoose")
 var passportLocalMongoose = require("passport-local-mongoose")

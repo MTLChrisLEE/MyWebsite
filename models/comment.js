@@ -5,7 +5,7 @@
 var mongoose = require("mongoose")
 
 var commentSchema = new mongoose.Schema({
-    user: String,
+    username: String,
     content: String
 })
 

@@ -25,3 +25,12 @@ body{
     font-style: italic;
 }
 
+.comment_section{
+    background-color: lightslategray;
+}
+
+textarea > .wmd-input_comment{
+    width: 1140px;
+    height: 150px;
+    resize: none;
+}

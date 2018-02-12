@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond|Oswald|Barlow|Fjalla+One" rel="stylesheet">
     <link rel="stylesheet" href="//cdn.rawgit.com/balpha/pagedown/master/demo/browser/demo.css" />
     <link rel="stylesheet" href="/stylesheet/home.css">
+
 </head>
 <body>
 <nav class="mynavbar navbar navbar-default  navbar-fixed-top">
@@ -26,11 +27,13 @@
                 <li><a href="https://www.linkedin.com/in/sanghyukchrislee/">About Me</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <%if(!currentUser){%>{>
-                <li><a href="/signin">Log In<i class="fa fa-user-plus"></i></a></li>
+
+                <%if(!currentUser){ %>
+                <li><a href="/signin">Sign in<i class="fa fa-user-plus"></i></a></li>
                 <%}else{%>
-                <li><a href="/signout">Log Out<i class="fa fa-user-plus"></i></a></li>
-                <%}%>
+                <li><a href="/signout">Sign Out<i class="fa fa-user-plus"></i></a></li>
+                <%} %>
+
                 <li><a href="/">Contact <i class="fa fa-user"></i></a></li>
             </ul>
         </div>

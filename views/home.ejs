@@ -11,33 +11,33 @@
             <hr style="margin-top: 0px">
 
             <% subjects.forEach(function(subject){ %>
-            <div class="col-lg-4">
-                <a href="/<%= subject.name %>">
-                    <div class="thumbnail">
-                        <img class="mycirimg" src="<%= subject.image %>">
-                    </div>
-                </a>
-            </div>
-            <div class="intro col-lg-8">
-                <a href="/<%= subject.name %>">
-                    <h4 id="subject"><%= subject.name.toUpperCase() %></h4>
-                    <p id="quote"><%= subject.quote %></p>
-                    <p id="author"><%= subject.author %></p>
-                </a>
-            </div>
-            <hr class="col-lg-11" style="border-top:1px dotted black; align:center;">
+                <div class="col-lg-4">
+                    <a href="/<%= subject.name %>">
+                        <div class="thumbnail">
+                            <img class="mycirimg" src="<%= subject.image %>">
+                        </div>
+                    </a>
+                </div>
+                <div class="intro col-lg-8">
+                    <a href="/<%= subject.name %>">
+                        <h4 id="subject"><%= subject.name.toUpperCase() %></h4>
+                        <p id="quote"><%= subject.quote %></p>
+                        <p id="author"><%= subject.author %></p>
+                    </a>
+                </div>
+                <hr class="col-lg-11" style="border-top:1px dotted black; align:center;">
             <% }) %>
 
-            <div class="col-lg-4">
-                <div class="thumbnail">
-                    <img class="cirimg" src="comingsoon.jpg">
+                <div class="col-lg-4">
+                    <div class="thumbnail">
+                        <img class="cirimg" src="comingsoon.jpg">
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-8">
-                <div>
-                    <h4 id="subject">COMING SOON</h4>
+                <div class="col-lg-8">
+                    <div>
+                        <h4 id="subject">COMING SOON</h4>
+                    </div>
                 </div>
-            </div>
         </div>
 
 

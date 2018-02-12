@@ -19,13 +19,13 @@
     <p><strong>Comments</strong></p>
     <hr style="margin-top: 0px">
 
-    <% comments.forEach(function(comment){ %>
-    <div>
-        <p style="color: cornflowerblue"><strong><em><%= currentUser.username%></em></strong></p>
-        <div><%- comment.content %></div>
-    </div>
+        <% comments.forEach(function(comment){ %>
+        <div>
+            <p style="color: cornflowerblue"><strong><em><%= currentUser.username%></em></strong></p>
+            <div><%- comment.content %></div>
+        </div>
     <hr size="20" style="border-top:1px dotted black">
-    <% }) %>
+        <% }) %>
 
 
 

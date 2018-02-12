@@ -63,7 +63,7 @@ app.use(function(req,res,next){
 
 
 app.get("/register", function (req, res) {
-    res.render("register.ejs")
+    res.render("signup.ejs")
 })
 
 app.post("/register", function (req, res) {
@@ -74,7 +74,7 @@ app.post("/register", function (req, res) {
     User.register(newUser, req.body.password, function (err, user) {
             if (err) {
                 console.log(err)
-                return res.render("register.ejs")
+                return res.render("signup.ejs")
             }
             passport.authenticate("local")(req, res, function () {
                 res.redirect("/")
@@ -89,7 +89,7 @@ app.post("/register", function (req, res) {
 
 
 app.get("/signin", function (req, res) {
-    res.render("signin.ejs")
+    res.render("login.ejs")
 })
 
 app.post("/signin",

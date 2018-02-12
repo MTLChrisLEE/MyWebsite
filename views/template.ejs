@@ -4,7 +4,9 @@
         <h1 id="subject"><%= subjects.name.toUpperCase() %></h1>
         <h3 id="quote"><%= subjects.quote %></h3>
         <p id="author" style="display: inline-block"><%= subjects.author %></p>
+        <%if(currentUser && currentUser.isAdmin){ %>
         <a role="button" class="addbutton btn btn-default btn-primary" href="<%=subjects.name%>/course/new">Add a course</a>
+        <% } %>
         <hr size="20" style="margin-bottom: 0px">
         <br>
     </div>
