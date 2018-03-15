@@ -9,7 +9,7 @@ var methodOverride = require("method-override");
 var passport = require('passport');
 var LocalStrategy = require('passport-local');;
 var markdown = require("markdown").markdown;
-
+var flash =  require("connect-flash")
 
 var Subject = require("./models/subject");
 var Review = require("./models/review");
@@ -39,11 +39,16 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(methodOverride("_method"))
+app.use(methodOverride("_method"));
+app.use(flash())
+
+
 mongoose.connect("mongodb://localhost/MTLChrisLEE");
 
 app.use(function(req,res,next){
     res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
     next();
 })
 
@@ -73,10 +78,11 @@ app.post("/register", function (req, res) {
     }
     User.register(newUser, req.body.password, function (err, user) {
             if (err) {
-                console.log(err)
-                return res.render("signup.ejs")
+                req.flash("error",err.message.toString())
+                return res.redirect("/register")
             }
             passport.authenticate("local")(req, res, function () {
+                req.flash("success", "Welcome to MTLChrisLEE " +  user.username)
                 res.redirect("/")
             })
         }
@@ -110,6 +116,7 @@ app.post("/signin",
 
 app.get("/signout", function (req, res) {
     req.logout();
+    req.flash("success","Logged out")
     res.redirect("/")
 })
 
@@ -273,12 +280,17 @@ app.get("/:subject", isLoggedIn, function (req, res) {
     Subject.findOne({name: req.params.subject}).populate("courses").exec(function (err, foundSubject) {
         if (err) {
             console.log("Cannot find the subject")
-            console.log(err)
+            res.redirect("/")
         } else {
             if (err) {
                 console.log(err);
+                res.redirect("/");
             } else {
-                res.render("template.ejs", {subjects: foundSubject, courses: foundSubject.courses})
+                if(foundSubject==null){
+                    res.redirect("/");
+                }else {
+                    res.render("template.ejs", {subjects: foundSubject, courses: foundSubject.courses})
+                }
             }
         }
     })
@@ -327,7 +339,7 @@ app.get("/:subject/:id", isLoggedIn, function (req, res) {
         } else {
             Course.findById(req.params.id, function (err, foundCourse) {
                 if (err) {
-                    res.redirect("/reviews")
+                    res.redirect("/")
                 } else {
                     foundCourse.content = markdown.toHTML(foundCourse.content)
                     console.log("====foundCourse====;");
@@ -449,15 +461,11 @@ app.post("/:subject/:id/comment", function (req, res) {
     })
 })
 
-
-
-
-
-
 function isLoggedIn(req,res,next){
     if(req.isAuthenticated()){
         return next();
     }
+    req.flash("error","Sign in First")
     res.redirect("/signin");
 }
 
@@ -467,8 +475,6 @@ function isAdmin(req,res,next){
     }
     res.redirect("/")
 }
-
-
 
 app.listen(30000, process.env.IP, function () {
     console.log("CONNECTED")
