@@ -1,35 +1,32 @@
-<% include partials/header.ejs%>
+<% include partials/header.ejs %>
+
 <div class="container">
     <div id="inputform">
-        <form action="/<%=subject.name%>/courses" method="POST">
+        <form action="/courses" method="POST">
             <div class="form-group">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="courses[title]" placeholder="Title" style="width:600px">
+                <label for="newsubject">Subject:</label>
+                <input type="text" id="newsubject" name="subjects[name]" placeholder="Subject" style="width:600px">
             </div>
 
             <div class="form-group">
-                <div id="wmd-button-bar"></div>
-                <textarea id="wmd-input" name="courses[content]" class="wmd-input"></textarea>
+                <label for="image">Image:</label>
+                <input type="text" id="image" name="subjects[image]" placeholder="Image URL" style="width:600px; margin-left: 10px">
             </div>
 
             <div class="form-group">
-                <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+                <label for="quote">Quote: </label>
+                <input type="text" id="quote" name="subjects[quote]" placeholder="Quote" style="width:600px; margin-left: 10px">
             </div>
 
-            <input class="btn btn-primary btn-md" type="submit">
+            <div class="form-group">
+                <label for="newauthor">Author: </label>
+                <input type="text" id="newauthor" name="subjects[author]" placeholder="Author" style="width:600px; margin-left: 5px">
+            </div>
 
+            <div class="form-group">
+                <input class="btn btn-primary btn-md" type="submit">
+            </div>
         </form>
     </div>
 </div>
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Converter.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Editor.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Sanitizer.js"></script>
-
-<script>
-    var converter = Markdown.getSanitizingConverter();
-    var editor = new Markdown.Editor(converter);
-    editor.run();
-</script>
-
-<% include partials/footer.ejs%>
+<% include partials/footer.ejs %>

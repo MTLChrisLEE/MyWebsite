@@ -1,0 +1,33 @@
+<% include partials/header.ejs %>
+<div class="container">
+    <div class="intro">
+        <h1 id="subject">Courses</h1>
+        <%if(currentUser && currentUser.isAdmin){ %>
+        <a role="button" class="addbutton btn btn-default btn-primary" href="/reviews/new" style="margin-left: 0px">Add a subject</a>
+        <% } %>
+        <hr size="20" style="margin-bottom: 0px">
+        <br>
+    </div>
+
+    <% subjects.forEach(function(subject){ %>
+    <div class="row">
+        <div class="col-lg-2">
+            <a href="/<%= subject.name %>">
+                <div class="thumbnail">
+                    <img class="mycirimg" src="<%= subject.image %>">
+                </div>
+            </a>
+        </div>
+        <div class="intro col-lg-8">
+            <a href="/<%= subject.name %>" style="text-align: center;">
+                <h4 id="subject"><%= subject.name.toUpperCase() %></h4>
+                <p id="quote" style="font-size: 12px"><%= subject.quote %></p>
+                <p id="author"><%= subject.author %></p>
+            </a>
+        </div>
+        <hr class="col-lg-11" style="border-top:1px dotted black; margin:0px; align:center">
+    </div>
+    <% }) %>
+</div>
+
+<% include partials/footer.ejs %>

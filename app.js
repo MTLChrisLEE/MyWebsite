@@ -139,7 +139,7 @@ app.post("/signin",
 
 //HOME
 app.get("/", function (req, res) {
-    Subject.find({}, function (err, subjects) {
+    Subject.find({}, function (err, subjects){
         if (err) {
             console.log("Cannot load subjects from dbs")
         } else {
@@ -149,9 +149,9 @@ app.get("/", function (req, res) {
                 } else {
                     res.render("home.ejs", {subjects: subjects, reviews: reviews})
                 }
-            })
+            }).limit(7)
         }
-    })
+    }).limit(4)
 })
 
 app.get("/aboutme", function (req, res) {
@@ -163,18 +163,28 @@ app.get("/aboutme", function (req, res) {
 //         ROUTES FOR SUBJECTS        //
 //====================================//
 
+app.get("/courses",isLoggedIn, function(req,res){
+    Subject.find({}, function (err, subjects) {
+        if (err) {
+            console.log("Cannot load subjects from dbs")
+        } else {
+            res.render("courses.ejs", {subjects: subjects})
+        }
+    })
+})
+
 
 //NEW ROUTE FOR SUBJECTS
-app.get("/home/new", isAdmin, function (req, res) {
-    res.render("newsubject.ejs");
+app.get("/courses/new", isAdmin, function (req, res) {
+    res.render("newcourse.ejs");
 })
 
 
 //POST ROUTE FOR SUBJECTS
-app.post("/", function (req, res) {
+app.post("/courses",isAdmin, function (req, res) {
     Subject.create(req.body.subjects, function (err, newSubject) {
         if (err) {
-            res.render("newsubject.ejs")
+            res.render("newcourse.ejs")
         } else {
             res.redirect("/")
         }
@@ -189,10 +199,9 @@ app.post("/", function (req, res) {
 
 //INDEX ROUTE FOR REVIEWS
 app.get("/reviews",  isLoggedIn, function (req, res) {
-    console.log(req.user)
     Review.find({}, function (err, reviews) {
         if (err) {
-            console.log("Cannot load subjects from dbs")
+            console.log("Cannot load reviews from dbs")
         } else {
             res.render("reviews.ejs", {reviews: reviews})
         }
@@ -269,13 +278,13 @@ app.delete("/reviews/:id", isAdmin, function (req, res) {
 
 
 //====================================//
-//         ROUTES FOR COURSES         //
+//         ROUTES FOR LECTURES        //
 //====================================//
 
 
 
 
-//INDEX ROUTE FOR COURSES
+//INDEX ROUTE FOR LECTURES
 app.get("/:subject", isLoggedIn, function (req, res) {
     Subject.findOne({name: req.params.subject}).populate("courses").exec(function (err, foundSubject) {
         if (err) {
@@ -297,20 +306,20 @@ app.get("/:subject", isLoggedIn, function (req, res) {
 })
 
 
-//NEW ROUTE FOR COURSE
+//NEW ROUTE FOR LECTURES
 app.get("/:subject/course/new",isAdmin, function (req, res) {
     Subject.find({name: req.params.subject}, function (err, foundSubject) {
         if (err) {
             res.redirect("/")
             console.log(err)
         } else {
-            res.render("newcourse.ejs", {subject: foundSubject[0]})
+            res.render("newlecture.ejs", {subject: foundSubject[0]})
         }
     })
 })
 
 
-//POST ROUTE FOR COURSES
+//POST ROUTE FOR LECTURES
 app.post("/:subject/courses", function (req, res) {
     Subject.find({name: req.params.subject}).populate("courses").exec(function (err, theSubject) {
         if (err) {
@@ -331,7 +340,7 @@ app.post("/:subject/courses", function (req, res) {
 })
 
 
-//SHOW ROUTE
+//SHOW ROUTE FOR LECTURES
 app.get("/:subject/:id", isLoggedIn, function (req, res) {
     Subject.findOne({name: req.params.subject}, function (err, foundSubject) {
         if (err) {
@@ -357,7 +366,7 @@ app.get("/:subject/:id", isLoggedIn, function (req, res) {
                         }
 
 
-                        res.render("showcourse.ejs", {subject: foundSubject, course: foundCourse, comments:foundComments})
+                        res.render("showlecture.ejs", {subject: foundSubject, course: foundCourse, comments:foundComments})
                     })
                 }
             })
@@ -376,7 +385,7 @@ app.get("/:subject/:id/edit", isAdmin, function (req, res) {
                 if (err) {
                     res.redirect("/" + req.params.subject)
                 } else {
-                    res.render("editcourse.ejs", {subject: foundSubject, course: foundCourse})
+                    res.render("editlecture.ejs", {subject: foundSubject, course: foundCourse})
                 }
             })
         }

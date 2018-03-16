@@ -67,6 +67,9 @@ body{
 /*           MAIN PAGE CSS         */
 /*=================================*/
 
+
+
+
 #author{
     font-style: italic;
 }
@@ -90,10 +93,6 @@ hr {
 
 #subject{
     font-family: 'Fjalla One', sans-serif;
-}
-
-#date{
-    border-right: 1px black solid;
 }
 
 #title{
@@ -142,3 +141,25 @@ hr {
     background-color: white;
 }
 
+@media (min-width: 768px) {
+    .container-small {
+        width: 300px;
+    }
+    .container-large {
+        width: 970px;
+    }
+}
+@media (min-width: 992px) {
+    .container{
+
+    }
+}
+@media (min-width: 1200px) {
+    .container{
+        width:1000px;
+    }
+}
+
+.container-small, .container-large {
+    max-width: 100%;
+}
