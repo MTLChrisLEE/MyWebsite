@@ -17,6 +17,7 @@ var Course = require("./models/course");
 var Comment = require("./models/comment");
 var User = require("./models/user");
 
+var private = require('./secret.js')
 
 var seedDB = require("./seeds");
 
@@ -25,7 +26,7 @@ seedDB()
 
 //Passport
 app.use(require("express-session")({
-    secret: "blablabla",
+    secret: private.secret,
     resave: false,
     saveUninitializeed: false
 }))
@@ -102,10 +103,10 @@ app.post("/signin",
     passport.authenticate("local",
         {
             successRedirect: "/",
-            failureRedirect: "/signin"
+            failureRedirect: "/signin",
+            failureFlash: "Invalid username or password!"
         }),
     function (req, res) {
-
     }
 )
 
@@ -351,12 +352,6 @@ app.get("/:subject/:id", isLoggedIn, function (req, res) {
                     res.redirect("/")
                 } else {
                     foundCourse.content = markdown.toHTML(foundCourse.content)
-                    console.log("====foundCourse====;");
-                    console.log(foundCourse);
-                    console.log("====foundCourse.comment====;");
-                    console.log(foundCourse.comment);
-
-
                     Comment.find({_id:{$in:foundCourse.comment}},function(err,foundComments){
                         for(index in foundComments)
                         {
