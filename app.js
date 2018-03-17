@@ -7,9 +7,10 @@ var bodyParser = require('body-parser');
 var mongoose = require("mongoose");
 var methodOverride = require("method-override");
 var passport = require('passport');
-var LocalStrategy = require('passport-local');;
+var LocalStrategy = require('passport-local');
+;
 var markdown = require("markdown").markdown;
-var flash =  require("connect-flash")
+var flash = require("connect-flash")
 
 var Subject = require("./models/subject");
 var Review = require("./models/review");
@@ -46,7 +47,7 @@ app.use(flash())
 
 mongoose.connect("mongodb://localhost/MTLChrisLEE");
 
-app.use(function(req,res,next){
+app.use(function (req, res, next) {
     res.locals.currentUser = req.user;
     res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");
@@ -54,13 +55,11 @@ app.use(function(req,res,next){
 })
 
 
-
 //====================================//
 //====================================//
 //            RESTFUL ROUTES          //
 //====================================//
 //====================================//
-
 
 
 //====================================//
@@ -74,16 +73,16 @@ app.get("/register", function (req, res) {
 
 app.post("/register", function (req, res) {
     var newUser = new User({username: req.body.username})
-    if(req.body.username==="admin"){
+    if (req.body.username === "admin") {
         newUser.isAdmin = true;
     }
     User.register(newUser, req.body.password, function (err, user) {
             if (err) {
-                req.flash("error",err.message.toString())
+                req.flash("error", err.message.toString())
                 return res.redirect("/register")
             }
             passport.authenticate("local")(req, res, function () {
-                req.flash("success", "Welcome to MTLChrisLEE " +  user.username)
+                req.flash("success", "Welcome to MTLChrisLEE " + user.username)
                 res.redirect("/")
             })
         }
@@ -117,7 +116,7 @@ app.post("/signin",
 
 app.get("/signout", function (req, res) {
     req.logout();
-    req.flash("success","Logged out")
+    req.flash("success", "Logged out")
     res.redirect("/")
 })
 
@@ -140,7 +139,7 @@ app.post("/signin",
 
 //HOME
 app.get("/", function (req, res) {
-    Subject.find({}, function (err, subjects){
+    Subject.find({}, function (err, subjects) {
         if (err) {
             console.log("Cannot load subjects from dbs")
         } else {
@@ -164,7 +163,7 @@ app.get("/aboutme", function (req, res) {
 //         ROUTES FOR SUBJECTS        //
 //====================================//
 
-app.get("/courses",isLoggedIn, function(req,res){
+app.get("/courses", isLoggedIn, function (req, res) {
     Subject.find({}, function (err, subjects) {
         if (err) {
             console.log("Cannot load subjects from dbs")
@@ -182,7 +181,7 @@ app.get("/courses/new", isAdmin, function (req, res) {
 
 
 //POST ROUTE FOR SUBJECTS
-app.post("/courses",isAdmin, function (req, res) {
+app.post("/courses", isAdmin, function (req, res) {
     Subject.create(req.body.subjects, function (err, newSubject) {
         if (err) {
             res.render("newcourse.ejs")
@@ -199,7 +198,7 @@ app.post("/courses",isAdmin, function (req, res) {
 
 
 //INDEX ROUTE FOR REVIEWS
-app.get("/reviews",  isLoggedIn, function (req, res) {
+app.get("/reviews", isLoggedIn, function (req, res) {
     Review.find({}, function (err, reviews) {
         if (err) {
             console.log("Cannot load reviews from dbs")
@@ -283,8 +282,6 @@ app.delete("/reviews/:id", isAdmin, function (req, res) {
 //====================================//
 
 
-
-
 //INDEX ROUTE FOR LECTURES
 app.get("/:subject", isLoggedIn, function (req, res) {
     Subject.findOne({name: req.params.subject}).populate("courses").exec(function (err, foundSubject) {
@@ -296,9 +293,9 @@ app.get("/:subject", isLoggedIn, function (req, res) {
                 console.log(err);
                 res.redirect("/");
             } else {
-                if(foundSubject==null){
+                if (foundSubject == null) {
                     res.redirect("/");
-                }else {
+                } else {
                     res.render("template.ejs", {subjects: foundSubject, courses: foundSubject.courses})
                 }
             }
@@ -308,7 +305,7 @@ app.get("/:subject", isLoggedIn, function (req, res) {
 
 
 //NEW ROUTE FOR LECTURES
-app.get("/:subject/course/new",isAdmin, function (req, res) {
+app.get("/:subject/course/new", isAdmin, function (req, res) {
     Subject.find({name: req.params.subject}, function (err, foundSubject) {
         if (err) {
             res.redirect("/")
@@ -352,17 +349,15 @@ app.get("/:subject/:id", isLoggedIn, function (req, res) {
                     res.redirect("/")
                 } else {
                     foundCourse.content = markdown.toHTML(foundCourse.content)
-                    Comment.find({_id:{$in:foundCourse.comment}},function(err,foundComments){
-                        for(index in foundComments)
-                        {
-                            foundComments[index].content=markdown.toHTML(foundComments[index].content);
+                    Comment.find({_id: {$in: foundCourse.comment}}, function (err, foundComments) {
+                        for (index in foundComments) {
+                            foundComments[index].content = markdown.toHTML(foundComments[index].content);
                         }
-
-                        console.log("======foundComments=======")
-                        console.log(foundComments[0]);
-                        console.log(foundComments[1]);
-
-                        res.render("showlecture.ejs", {subject: foundSubject, course: foundCourse, comments:foundComments})
+                        res.render("showlecture.ejs", {
+                            subject: foundSubject,
+                            course: foundCourse,
+                            comments: foundComments
+                        })
                     })
                 }
             })
@@ -442,22 +437,16 @@ app.post("/:subject/:id/comment", function (req, res) {
                 if (err) {
                     res.redirect("/")
                 } else {
-                    Comment.create(req.body.comment, function(err,newcomment){
-                        if(err){
+                    Comment.create(req.body.comment, function (err, newcomment) {
+                        if (err) {
                             res.redirect("/");
-                        }else{
-                            newcomment.content=markdown.toHTML(newcomment.content);
-                            newcomment.username=req.user.username;
-                            console.log("====thecourse====")
-                            console.log(thecourse);
-                            console.log("====newcomment====")
-                            console.log(newcomment)
+                        } else {
+                            newcomment.content = markdown.toHTML(newcomment.content);
+                            newcomment.username = req.user.username;
                             thecourse.comment.push(newcomment._id);
                             thecourse.save();
-                            console.log("====thecourse====")
-                            console.log(thecourse)
                             theSubject.save();
-                            res.redirect("/"+theSubject.name+"/"+thecourse._id);
+                            res.redirect("/" + theSubject.name + "/" + thecourse._id);
                         }
                     })
                 }
@@ -466,16 +455,16 @@ app.post("/:subject/:id/comment", function (req, res) {
     })
 })
 
-function isLoggedIn(req,res,next){
-    if(req.isAuthenticated()){
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
         return next();
     }
-    req.flash("error","Sign in First")
+    req.flash("error", "Sign in First")
     res.redirect("/signin");
 }
 
-function isAdmin(req,res,next){
-    if(req.isAuthenticated() && req.user.isAdmin){
+function isAdmin(req, res, next) {
+    if (req.isAuthenticated() && req.user.isAdmin) {
         return next();
     }
     res.redirect("/")
