@@ -21,7 +21,7 @@ var private = require('./secret.js')
 
 var seedDB = require("./seeds");
 
-seedDB()
+seedDB();
 
 
 //Passport
@@ -356,10 +356,11 @@ app.get("/:subject/:id", isLoggedIn, function (req, res) {
                         for(index in foundComments)
                         {
                             foundComments[index].content=markdown.toHTML(foundComments[index].content);
-                            console.log("======foundComment.content")
-                            console.log(foundComments[index].content)
                         }
 
+                        console.log("======foundComments=======")
+                        console.log(foundComments[0]);
+                        console.log(foundComments[1]);
 
                         res.render("showlecture.ejs", {subject: foundSubject, course: foundCourse, comments:foundComments})
                     })
@@ -412,7 +413,6 @@ app.delete("/:subject/:id", isAdmin, function (req, res) {
         if (err) {
             console.log(err)
         } else {
-            console.log(deletedCourse)
             Subject.updateOne({name: req.params.subject},
                 {
                     $pull: {courses: {_id: req.params.id}}
@@ -446,7 +446,8 @@ app.post("/:subject/:id/comment", function (req, res) {
                         if(err){
                             res.redirect("/");
                         }else{
-                            newcomment.content=markdown.toHTML(newcomment.content)
+                            newcomment.content=markdown.toHTML(newcomment.content);
+                            newcomment.username=req.user.username;
                             console.log("====thecourse====")
                             console.log(thecourse);
                             console.log("====newcomment====")

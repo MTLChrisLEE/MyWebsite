@@ -65,15 +65,24 @@ var reviews = [
 
 
 function seedDB() {
+
+    Comment.remove({},function (err) {
+        if(err){
+            console.log(err);
+        }
+        console.log("Removed all comments")
+    })
+
+
     //Remove all Subjects
     Course.remove({},function(err){
         if(err){
             console.log(err);
         }
         console.log("Removed all courses")
-
-
     });
+
+
 
     Review.remove({},function(err){
         if (err) {

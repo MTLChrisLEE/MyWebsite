@@ -129,7 +129,7 @@ hr {
     border-top: 1px dotted #c8ccd0;
     border-bottom: 1px dotted #c8ccd0;
     clear: both;
-    width: 1140px;
+    width: 100%;
     margin-bottom: 5px;
     word-wrap: break-word;
     font-size: 15px;
@@ -139,6 +139,7 @@ hr {
 
 .wmd-input{
     background-color: white;
+    resize: none
 }
 
 @media (min-width: 768px) {
@@ -162,4 +163,19 @@ hr {
 
 .container-small, .container-large {
     max-width: 100%;
+}
+
+
+#lecturecontent img{
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+#wmd-preview img{
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }

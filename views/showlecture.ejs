@@ -10,7 +10,7 @@
     <%} %>
     <hr>
 
-    <div><%- course.content %></div>
+    <div id="lecturecontent"><%- course.content %></div>
 
     <br>
     <br>
@@ -21,7 +21,7 @@
 
         <% comments.forEach(function(comment){ %>
         <div>
-            <p style="color: cornflowerblue"><strong><em><%= currentUser.username%></em></strong></p>
+            <p style="color: cornflowerblue"><strong><em><%= comment.username%></em></strong></p>
             <div><%- comment.content %></div>
         </div>
     <hr size="20" style="border-top:1px dotted black">
@@ -31,10 +31,10 @@
 
     <form action="/<%= subject.name %>/<%= course._id %>/comment" method="POST">
         <div class="form-group">
-            <%= currentUser.username%>
+            <input type="text" name="comment[username]" value="<%=currentUser.username%>" style="border: 0"readonly>
             <div id="wmd-button-bar"></div>
             <textarea id="wmd-input" name="comment[content]" class="wmd-input"
-                      style="resize: none; width:1140px; height:150px"></textarea>
+                      style="resize: none; width:970px; height:150px"></textarea>
         </div>
         <input class="btn btn-primary btn-md" value="Comment" type="submit">
     </form>
