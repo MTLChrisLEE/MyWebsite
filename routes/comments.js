@@ -1,0 +1,61 @@
+/**
+ * Created by Chris on 3/17/2018.
+ */
+//====================================//
+//         ROUTES FOR Comment         //
+//====================================//
+
+var express = require('express')
+var router = express.Router();
+
+var Subject = require("../models/subject");
+var Course = require("../models/course");
+var Comment = require("../models/comment");
+var markdown = require("markdown").markdown;
+
+router.post("/:subject/:id/comment", function (req, res) {
+    Subject.findOne({name: req.params.subject}, function (err, theSubject) {
+        if (err) {
+            res.redirect("/")
+            console.log(err)
+        } else {
+            Course.findById(req.params.id, function (err, thecourse) {
+                if (err) {
+                    res.redirect("/")
+                } else {
+                    Comment.create(req.body.comment, function (err, newcomment) {
+                        if (err) {
+                            res.redirect("/");
+                        } else {
+                            newcomment.content = markdown.toHTML(newcomment.content);
+                            newcomment.username = req.user.username;
+                            thecourse.comment.push(newcomment._id);
+                            thecourse.save();
+                            theSubject.save();
+                            res.redirect("/" + theSubject.name + "/" + thecourse._id);
+                        }
+                    })
+                }
+            })
+        }
+    })
+})
+
+
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    req.flash("error", "Sign in First")
+    res.redirect("/signin");
+}
+
+function isAdmin(req, res, next) {
+    if (req.isAuthenticated() && req.user.isAdmin) {
+        return next();
+    }
+    res.redirect("/")
+}
+
+
+module.exports = router;
