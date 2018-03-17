@@ -18,7 +18,7 @@ var Course = require("./models/course");
 var Comment = require("./models/comment");
 var User = require("./models/user");
 
-var private = require('./secret.js')
+var secret = require('./secret.js')
 
 var seedDB = require("./seeds");
 
@@ -27,7 +27,7 @@ seedDB();
 
 //Passport
 app.use(require("express-session")({
-    secret: private.secret,
+    secret: secret.secret,
     resave: false,
     saveUninitializeed: false
 }))
@@ -73,8 +73,12 @@ app.get("/register", function (req, res) {
 
 app.post("/register", function (req, res) {
     var newUser = new User({username: req.body.username})
-    if (req.body.username === "admin") {
+    if (req.body.username === secret.AdminID) {
         newUser.isAdmin = true;
+        newUser.isRecruiter = true;
+    }
+    if (req.body.username === secret.ReruiterID) {
+        newUser.isRecruiter = true;
     }
     User.register(newUser, req.body.password, function (err, user) {
             if (err) {
@@ -154,10 +158,10 @@ app.get("/", function (req, res) {
     }).limit(4)
 })
 
-app.get("/aboutme", function (req, res) {
-    res.render("aboutme.ejs");
-})
 
+app.get("/contact",function(req,res){
+    res.render("contact.ejs");
+});
 
 //====================================//
 //         ROUTES FOR SUBJECTS        //

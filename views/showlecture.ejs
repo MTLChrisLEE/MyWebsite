@@ -21,7 +21,13 @@
 
         <% comments.forEach(function(comment){ %>
         <div>
-            <p style="color: cornflowerblue"><strong><em><%= comment.username%></em></strong></p>
+            <p
+                    <% if(comment.username=="AdministratorMTLChrisLEE"){%>
+                    style="color: red"
+                    <% }else{%>
+                    style="color: cornflowerblue"
+                    <%}%>
+                    ><strong><em><%= comment.username%></em></strong></p>
             <div><%- comment.content %></div>
         </div>
     <hr size="20" style="border-top:1px dotted black">

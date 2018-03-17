@@ -7,7 +7,7 @@ var Subject = require("./models/subject")
 var Review = require("./models/review")
 var Course = require("./models/course")
 var Comment = require("./models/comment")
-
+var User = require("./models/user")
 
 var subjects = [
     {
@@ -65,6 +65,15 @@ var reviews = [
 
 
 function seedDB() {
+
+    User.remove({},function (err) {
+        if(err){
+            console.log(err);
+        }
+        console.log("Removed all users")
+    })
+
+
 
     Comment.remove({},function (err) {
         if(err){
