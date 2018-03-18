@@ -42,6 +42,36 @@ router.post("/:subject/:id/comment", function (req, res) {
 })
 
 
+router.delete("/:subject/:id/:comment_id", function (req, res) {
+    Comment.findByIdAndRemove(req.params.comment_id, function (err, deletedCourse) {
+        if (err) {
+            console.log(err)
+        } else {
+            Course.updateOne({name: req.params.id},
+                {
+                    $pull: {comments: {_id: req.params.comment_id}}
+                },
+                function (err) {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        Subject.updateOne({name: req.params.subject},
+                            function (err) {
+                                if (err) {
+                                    console.log(err)
+                                } else {
+                                    res.redirect("/" + req.params.subject+"/"+req.params.id);
+                                }
+                            })
+                    }
+                })
+        }
+    })
+})
+
+
+
+
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
