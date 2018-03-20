@@ -37,17 +37,13 @@ router.get("/:subject", isLoggedIn, function (req, res) {
                     console.log(err);
                     res.redirect("/");
                 } else {
-                    Course.count(foundSubject.courses).exec(function (err, count) {
+                    Course.find({subject:req.params.subject}).count(foundSubject.courses).exec(function (err, count) {
                         if (err) {
                             console.log(err)
                         } else {
                             if (foundSubject == null) {
                                 res.redirect("/");
                             } else {
-                                console.log("=====Course.count()");
-                                console.log(Course.count());
-                                console.log("======count====");
-                                console.log(count)
                                 res.render("template.ejs", {
                                     subjects: foundSubject,
                                     courses: foundSubject.courses,
@@ -87,6 +83,8 @@ router.post("/:subject/courses", function (req, res) {
                 if (err) {
                     console.log(err)
                 } else {
+                    createdCourse.subject=req.params.subject.toString();
+                    createdCourse.save();
                     theSubject[0].courses.push(createdCourse);
                     theSubject[0].save();
                     res.redirect('/' + theSubject[0].name);

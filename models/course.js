@@ -11,7 +11,8 @@ var courseSchema = new mongoose.Schema({
     comment: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"
-    }]
+    }],
+    subject:  String
 });
 
 module.exports = mongoose.model("Course",courseSchema);
