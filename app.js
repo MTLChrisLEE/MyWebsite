@@ -20,14 +20,14 @@ var User = require("./models/user");
 
 var secret = require('./secret.js')
 
-var seedDB = require("./seeds");
-
-seedDB();
+// var seedDB = require("./seeds");
+//
+// seedDB();
 
 
 //Passport
 app.use(require("express-session")({
-    secret: secret.secret,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitializeed: false
 }))
@@ -51,7 +51,7 @@ var commentRoutes = require("./routes/comments"),
     subjectsRoutes = require("./routes/subjects"),
     lecturesRoutes = require("./routes/lectures");
 
-mongoose.connect("mongodb://localhost/MTLChrisLEE");
+mongoose.connect(process.env.DATABASEURL);
 
 app.use(function (req, res, next) {
     res.locals.currentUser = req.user;
@@ -121,6 +121,6 @@ function isAdmin(req, res, next) {
     res.redirect("/")
 }
 
-app.listen(30000, process.env.IP, function () {
+app.listen(process.env.PORT || 30000, process.env.IP, function () {
     console.log("CONNECTED")
 })

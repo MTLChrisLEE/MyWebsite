@@ -18,11 +18,11 @@ router.get("/register", function (req, res) {
 
 router.post("/register", function (req, res) {
     var newUser = new User({username: req.body.username})
-    if (req.body.username === secret.AdminID) {
+    if (req.body.username === process.env.ADMINID) {
         newUser.isAdmin = true;
         newUser.isRecruiter = true;
     }
-    if (req.body.username === secret.ReruiterID) {
+    if (req.body.username === process.env.RECRUITERID) {
         newUser.isRecruiter = true;
     }
     User.register(newUser, req.body.password, function (err, user) {
